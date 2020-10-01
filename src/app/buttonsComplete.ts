@@ -1,4 +1,4 @@
-import { Button } from "./button"
+import { Button } from "./models/button"
 
 // All buttons we need
 

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 //Importing local model and services
-import { Button } from '../button';
+import { Button } from '../models/button';
 import { BUTTONS } from "../buttonsComplete";
 import { DisplayService } from '../display.service';
 import { ButtonpanelService } from '../buttonpanel.service'

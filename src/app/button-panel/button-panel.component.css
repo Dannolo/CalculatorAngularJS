@@ -24,7 +24,7 @@ wide class only for the last row where there are less elements */
     display: inline-flex;
     width: 25%;
     flex: 1 0 auto;
-    height: 140px;
+    height: 100px;
   }
   
   .component-button.wide {

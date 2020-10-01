@@ -4,7 +4,7 @@ import Big from "big.js";
 
 import operate from "./operate";
 import isNumber from "./isNumber";
-import { State } from '../state';
+import { State } from '../models/state';
 
 /**
  * Same logic used in react Calculator, but modified in some lines to get it working with Angular

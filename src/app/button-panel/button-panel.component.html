@@ -5,8 +5,7 @@ We will get the calculator's panel genereting all rows one by one to get the pag
 
     <div>
         <div *ngFor="let button of buttonpanelService.row1" class="{{button.class}}">
-            <button (
-                click)="setDisplay(button)">{{button.name}}</button>
+            <button (click)="setDisplay(button)">{{button.name}}</button>
         </div>
     </div>
 
