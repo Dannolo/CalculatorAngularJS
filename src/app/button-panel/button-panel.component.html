@@ -1,0 +1,37 @@
+<!-- Rendering to DOM the buttons created and worked in buttonPanelService.ts.
+We will get the calculator's panel genereting all rows one by one to get the pagination I want. -->
+
+<div class="component-button-panel">
+
+    <div>
+        <div *ngFor="let button of buttonpanelService.row1" class="{{button.class}}">
+            <button (
+                click)="setDisplay(button)">{{button.name}}</button>
+        </div>
+    </div>
+
+        <div>
+        <div *ngFor="let button of buttonpanelService.row2" class="{{button.class}}">
+            <button (click)="setDisplay(button)">{{button.name}}</button>
+        </div>
+    </div>   
+
+    <div>
+        <div *ngFor="let button of buttonpanelService.row3" class="{{button.class}}">
+            <button (click)="setDisplay(button)">{{button.name}}</button>
+        </div>
+    </div>   
+
+    <div>
+        <div *ngFor="let button of buttonpanelService.row4" class="{{button.class}}">
+            <button (click)="setDisplay(button)">{{button.name}}</button>
+        </div>
+    </div>   
+
+    <div>
+        <div *ngFor="let button of buttonpanelService.row5" class="{{button.class}}">
+            <button (click)="setDisplay(button)">{{button.name}}</button>
+        </div>
+    </div>   
+
+</div>
