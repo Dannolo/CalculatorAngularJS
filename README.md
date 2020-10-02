@@ -12,6 +12,8 @@ Go to project directory
 
 Wait for the packages to install...
 
-## Development server
+## Deply
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+Run `ng serve -o` for a dev server and enjoy you Calculator! 
+
+(If browser didn't open automatically, navigate to `http://localhost:4200/`).
