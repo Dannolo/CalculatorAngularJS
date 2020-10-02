@@ -7,21 +7,41 @@ import isNumber from "./isNumber";
 import { State } from '../models/state';
 
 /**
- * Same logic used in react Calculator, but modified in some lines to get it working with Angular
- * @param obj:State   class that contains all our numbers
+ * Same logic used in react Calculator, but modified in some lines to get it working with Angular and to modify how 
+ * the calculator works.
+ * 
+ * Some auxiliary functions are imported like IsNumber (used to understand if that value is a Number)
+ * and operate (used to operate the calculator with the Big library)
+ * 
+ * @param state:State   class that contains all our numbers
  * @param buttonName:string    What we clicked
  */
 
-/**DESCRIPTION
- * Given a button name and a calculator data object, return an updated
- * calculator data object.
+/** DESCRIPTION
+ * 
+ * Given a button name and a calculator data state, return an updated
+ * calculator data state.
  *
- * Calculator data object contains:
+ * Calculator data state contains:
  *   total:String      the running total
  *   next:String       the next number to be operated on with the total
  *   operation:String  +, -, etc.
+ * 
+ * USAGE
+ * 
+ * AC: returns all at starting point with 0 as first number (state.total);
+ * 0 - 9: selects that number;
+ * . : makes the number decimal;
+ * %: does percentage of that number;
+ * +/-: change sign;
+ * (+, -, x, /, =): do their operations;
+ * 
+ * Other comments are on written directly in the functions code
  */
-export function calculate(obj: State, buttonName: string) {
+
+
+export function calculate(state: State, buttonName: string) {
+
   if (buttonName === "AC") {
     return {
       total: null,
@@ -31,114 +51,119 @@ export function calculate(obj: State, buttonName: string) {
   }
 
   if (isNumber(buttonName)) {
-    if (buttonName === "0" && obj.next === "0") {
+    if (buttonName === "0" && state.next === "0") {
       return {
-        total: obj.total,
-        next: obj.next,
-        operation: obj.operation
+        total: state.total,
+        next: state.next,
+        operation: state.operation
       };
     }
+
     // If there is an operation, update next
-    if (obj.operation) {
-      if (obj.next) {
+    if (state.operation) {
+      if (state.next) {
         return {
-            total: obj.total,
-            next: obj.next + buttonName,
-            operation: obj.operation
+            total: state.total,
+            next: state.next + buttonName,
+            operation: state.operation
             };
       }
-      return { total: obj.total, next: buttonName, operation: obj.operation };
+      return { total: state.total, next: buttonName, operation: state.operation };
     }
+
     // If there is no operation, update next and clear the value
-    if (obj.next) {
-      const next = obj.next === "0" ? buttonName : obj.next + buttonName;
+    if (state.next) {
+      const next = state.next === "0" ? buttonName : state.next + buttonName;
       return {
         next,
         total: null,
-        operation: obj.operation
+        operation: state.operation
       };
     }
     return {
       next: buttonName,
       total: null,
-      operation: obj.operation
+      operation: state.operation
     };
   }
 
   if (buttonName === "%") {
-    if (obj.operation && obj.next) {
-      const result = operate(obj.total, obj.next, obj.operation);
+    if (state.next) {
       return {
-        total: Big(result)
+        total: state.total,
+        next: Big(state.next)
           .div(Big("100"))
           .toString(),
-        next: null,
-        operation: null,
+        operation: state.operation
       };
     }
-    if (obj.next) {
+    if (state.total && !state.next) {
       return {
-        total: obj.total,
-        next: Big(obj.next)
+        total: Big(state.total)
           .div(Big("100"))
           .toString(),
-        operation: obj.operation
+        next: state.next,
+        operation: state.operation
       };
     }
     return {
-        total: obj.total,
-        next: obj.next,
-        operation: obj.operation
+        total: state.total,
+        next: state.next,
+        operation: state.operation
     };
   }
 
   if (buttonName === ".") {
-    if (obj.next) {
+    if (state.next) {
       // ignore a . if the next number already has one
-      if (obj.next.includes(".")) {
+      if (state.next.includes(".")) {
         return {
-            total: obj.total,
-            next: obj.next,
-            operation: obj.operation};
+            total: state.total,
+            next: state.next,
+            operation: state.operation};
       }
-      return { total: obj.total, next: obj.next + "." , operation: obj.operation };
+      return { total: state.total, next: state.next + "." , operation: state.operation };
     }
-    return { total: obj.total, next: "0.", operation: obj.operation };
+
+    return { total: state.total, next: "0.", operation: state.operation };
   }
 
   if (buttonName === "=") {
-    if (obj.next && obj.operation) {
+    if (state.next && state.operation) {
       return {
-        total: operate(obj.total, obj.next, obj.operation),
+        total: operate(state.total, state.next, state.operation),
         next: null,
         operation: null,
       };
     } else {
       // '=' with no operation, nothing to do
       return {
-            total: obj.total,
-            next: obj.next,
-            operation: obj.operation,
+            total: state.total,
+            next: state.next,
+            operation: state.operation,
       };
     }
   }
 
+  // changing sign, next or total in Float and go back to string
   if (buttonName === "+/-") {
-    if (obj.next) {
-      return {total: obj.total, next: (-1 * parseFloat(obj.next)).toString(), operation: obj.operation };
+    if (state.next) {
+      return {total: state.total, next: (-1 * parseFloat(state.next)).toString(), operation: state.operation };
     }
-    if (obj.total) {
-      return { total: (-1 * parseFloat(obj.total)).toString(), next: obj.next, operation: obj.operation };
+    if (state.total) {
+      return { total: (-1 * parseFloat(state.total)).toString(), next: state.next, operation: state.operation };
     }
-    return {};
+    return {total: state.total, next: state.next, operation: state.operation};
   }
 
   // Button must be an operation
 
   // User pressed an operation button and there is an existing operation
-  if (obj.operation) {
+  // Case when you already put all state value and you want to make another operations to the result
+
+  if (state.operation) {
     return {
-      total: operate(obj.total, obj.next, obj.operation),
+      total: operate(state.total, state.next, state.operation),
       next: null,
       operation: buttonName,
     };
@@ -147,15 +172,15 @@ export function calculate(obj: State, buttonName: string) {
   // no operation yet, but the user typed one
 
   // The user hasn't typed a number yet, just save the operation
-  if (!obj.next) {
-    return { total: obj.total,
-        next: obj.next,
+  if (!state.next) {
+    return { total: state.total,
+        next: state.next,
         operation: buttonName, };
   }
 
   // save the operation and shift 'next' into 'total'
   return {
-    total: obj.next,
+    total: state.next,
     next: null,
     operation: buttonName,
   };

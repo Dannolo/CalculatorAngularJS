@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 //Importing local model and services
 import { Button } from '../models/button';
-import { BUTTONS } from "../buttonsComplete";
+import { BUTTONS } from "../models/buttonsComplete";
 import { DisplayService } from '../display.service';
 import { ButtonpanelService } from '../buttonpanel.service'
 
@@ -43,8 +43,7 @@ export class ButtonPanelComponent implements OnInit {
     this.displayService.setDisplay(calculate(this.displayService.state, this.getButtonName(button)))
 
     // FOR DEBUG PURPOSE
-    // console.log(calculate(this.displayService.state, this.getButtonName(button)));
-    // console.log(this.displayService.state);
+    console.log(this.displayService.state);
 
   }
 

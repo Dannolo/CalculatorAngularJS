@@ -1,4 +1,3 @@
-import { Button } from 'protractor'
 
 // We need to understand if that Button.name is a number
 
