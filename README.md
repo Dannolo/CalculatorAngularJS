@@ -14,6 +14,6 @@ Wait for the packages to install...
 
 ## Deploy
 
-Run `ng serve -o` for a dev server and enjoy you Calculator! 
+Run `ng serve -o` for a dev server and enjoy your Calculator! 
 
 (If browser didn't open automatically, navigate to `http://localhost:4200/`).
