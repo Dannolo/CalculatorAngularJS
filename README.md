@@ -1,6 +1,6 @@
 # Calculator
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 10.1.3.
+This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 10.1.3 with Node version 12.18.4.
 
 ## Installation
 
