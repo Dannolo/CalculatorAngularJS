@@ -12,7 +12,7 @@ Go to project directory
 
 Wait for the packages to install...
 
-## Deply
+## Deploy
 
 Run `ng serve -o` for a dev server and enjoy you Calculator! 
 
